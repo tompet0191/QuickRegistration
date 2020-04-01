@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snabbregistrera @ Visma Online
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @updateURL    https://github.com/tompet0191/QuickRegistration/raw/master/Snabbregistrera%20%40%20Visma%20Online.user.js
