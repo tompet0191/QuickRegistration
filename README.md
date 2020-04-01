@@ -6,7 +6,7 @@ Tested with Tampermonkey but should work with Greasemonkey as well.
 ### Installation
 - Install Tampermonkey browser plugin (https://www.tampermonkey.net/)
 - From the Tampermonkey dashboard, click 'Utilities' tab
-- Add the following url to Install URL and click Install: https://bit.ly/2wT0uT5
+- Add the following URL to Install URL and click Install: https://bit.ly/2wT0uT5
 ### Usage 
 To use, press the green button named Snabbregga in the top right corner.
 Any not already reported normal weekday will be updated as an 8 hour workday.
