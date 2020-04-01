@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snabbregistrera @ Visma Online
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @match        https://timeclock.vismaonline.com/*
