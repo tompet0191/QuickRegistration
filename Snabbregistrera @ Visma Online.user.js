@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snabbregistrera @ Visma Online
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @homepage     https://github.com/tompet0191/QuickRegistration
@@ -13,7 +13,8 @@
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // ==/UserScript==
 
-const months = [ "januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december" ];
+const months = [ "januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober",
+    "november", "december" ];
 
 const nonWorkingDays = [ "01-01", "01-06", "05-01", "06-06", "12-24", "12-25", "12-26", "12-31"];
 
@@ -32,12 +33,13 @@ function addButton() {
     }
 
     let newEl = document.createElement('span');
-    newEl.innerHTML = '<button id="snabbregga" class="btn btn-primary" title="Registrera att du arbetat heldag för alla vardagar som inte redan registrerats fram t.o.m. dagens datum">Snabbregga</button>';
+    newEl.innerHTML = '<button id="snabbregga" class="btn btn-primary" title="Registrera att du arbetat heldag för alla' +
+        'vardagar som inte redan registrerats fram t.o.m. dagens datum">Snabbregga</button>';
 
     const ref = document.querySelector('#btn-register-time');
 
     insertBefore(newEl, ref);
-    $("#snabbregga").on("click", markWorkDays);
+    $("#snabbregga").on("click", main);
 };
 
 const rafAsync = () => {
@@ -89,7 +91,29 @@ const getEndDate = () => {
     return today < endDateInPeriod ? today : endDateInPeriod;
 }
 
-const markWorkDays = async () => {
+const createListOfWeekDays = (startDate, getDaysArray) => {
+    const daysList = getDaysArray(startDate, getEndDate())
+        .filter(d => (d.getDay() != 6 && d.getDay() != 0)); //remove saturdays and sundays
+
+    return daysList.map(v => v.toLocaleString('sv-SE').slice(5,10));
+}
+
+const removeExemptedDays = (daysToHandle) => daysToHandle
+    .filter(d => !nonWorkingDays.includes(d))
+    .filter(d => document.querySelector("[id$='" + d + "']").children[1].children.length === 1); //Remove days that already has time reported
+
+const handleMarking = async (daysToHandle) => {
+    for (let day of daysToHandle) {
+        clickCalendarItem(day);
+
+        await checkElement('#fullWorkShift');
+
+        document.querySelector("#fullWorkShift").click();
+        document.querySelector("#saveAndCloseSecondary").click();
+    }
+}
+
+const main = async () => {
     const getDaysArray = function(s,e) {for(var a=[], d=s;d<=e;d.setDate(d.getDate()+1)){ a.push(new Date(d));}return a;}
 
     const startDate = getStartDate();
@@ -99,27 +123,11 @@ const markWorkDays = async () => {
         return;
     }
 
-    //Create the list and remove saturdays and sundays
-    const daysList = getDaysArray(startDate, getEndDate())
-        .filter(d => (d.getDay() != 6 && d.getDay() != 0));
+    const days = createListOfWeekDays(startDate, getDaysArray);
 
-    let daysToHandle = daysList.map(v => v.toLocaleString('sv-SE').slice(5,10));
+    const daysToHandle = removeExemptedDays(days);
 
-    //Remove non working days
-    daysToHandle = daysToHandle.filter(d => !nonWorkingDays.includes(d));
-
-    //Remove days that already has time reported
-    daysToHandle = daysToHandle.filter(d => document.querySelector("[id$='" + d + "']").children[1].children.length === 1);
-
-    // Mark all other days as full work day
-    for (let day of daysToHandle) {
-        clickCalendarItem(day);
-
-        await checkElement('#fullWorkShift');
-
-        document.querySelector("#fullWorkShift").click();
-        document.querySelector("#saveAndCloseSecondary").click();
-    }
+    handleMarking(daysToHandle);
 
     document.activeElement.blur();
 };
