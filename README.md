@@ -6,8 +6,8 @@ Tested with Tampermonkey but should work with Greasemonkey as well.
 ### Installation
 - Install Tampermonkey browser plugin (https://www.tampermonkey.net/)
 - From the Tampermonkey dashboard, click 'Utilities' tab
-- Copy and add the following URL to Install URL: https://bit.ly/2wT0uT5
-- click Install
+- Copy and add the following URL to 'Install URL': https://bit.ly/2wT0uT5
+- Click 'Install'
 
 ### Usage 
 To use, press the green button named Snabbregga in the top right corner.
