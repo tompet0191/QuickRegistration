@@ -5,8 +5,8 @@
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @homepage     https://github.com/tompet0191/QuickRegistration
-// @updateURL    https://github.com/tompet0191/QuickRegistration/raw/master/Snabbregistrera%20%40%20Visma%20Online.user.js
-// @downloadURL  https://github.com/tompet0191/QuickRegistration/raw/master/Snabbregistrera%20%40%20Visma%20Online.user.js
+// @updateURL    https://bit.ly/2wT0uT5
+// @downloadURL  https://bit.ly/2wT0uT5
 // @match        https://timeclock.vismaonline.com/*
 // @grant        none
 // @require      https://gist.githubusercontent.com/raw/2625891/waitForKeyElements.js
