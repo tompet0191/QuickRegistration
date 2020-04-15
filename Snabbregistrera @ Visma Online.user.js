@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snabbregistrera @ Visma Online
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @homepage     https://github.com/tompet0191/QuickRegistration
@@ -15,8 +15,6 @@
 
 const months = [ "januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober",
     "november", "december" ];
-
-const nonWorkingDays = [ "01-01", "01-06", "05-01", "06-06", "12-24", "12-25", "12-26", "12-31"];
 
 waitForKeyElements (
     "#btn-register-time",
@@ -99,7 +97,7 @@ const createListOfWeekDays = (startDate, getDaysArray) => {
 }
 
 const removeExemptedDays = (daysToHandle) => daysToHandle
-    .filter(d => !nonWorkingDays.includes(d))
+    .filter(d => document.querySelector("[id$='" + d + "']").querySelector(".red-day") === null) //Remove red days
     .filter(d => document.querySelector("[id$='" + d + "']").children[1].children.length === 1); //Remove days that already has time reported
 
 const handleMarking = async (daysToHandle) => {
