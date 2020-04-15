@@ -15,4 +15,4 @@ Any not already reported normal weekday will be updated as an 8-hour workday.
 ![Alt text](/example-screenshot.png?raw=true "Added button 'Snabbregga'")
 
 ### Automatic updates in Tampermonkey
-When a new version of the file is available, it will be updated. It checks for new updates depending on your setting (default: daily) or by manually clicking 'Check for userscript updates' on the Tampermonkey icon in your browser.
+When a new version of the file is available, the script will be updated. It checks for new updates depending on your setting (default: daily) or by manually clicking 'Check for userscript updates' on the Tampermonkey icon in your browser.
