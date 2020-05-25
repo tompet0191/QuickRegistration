@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snabbregistrera @ Visma Online
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      1.0
 // @description  Quick registration in Visma Online
 // @author       tommy.pettersson@northmill.se
 // @homepage     https://github.com/tompet0191/QuickRegistration
@@ -11,6 +11,8 @@
 // @grant        none
 // @require      https://gist.githubusercontent.com/raw/2625891/waitForKeyElements.js
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+// @require      https://cdn.rawgit.com/meetselva/attrchange/master/js/attrchange.js
+// @require      https://cdn.rawgit.com/meetselva/attrchange/master/js/attrchange_ext.js
 // ==/UserScript==
 
 const months = [ "januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober",
@@ -30,15 +32,34 @@ function addButton() {
         return;
     }
 
+    addAttributeListener($('#btn-register-time'));
+
     let newEl = document.createElement('span');
     newEl.innerHTML = '<button id="snabbregga" class="btn btn-primary" title="Registrera att du arbetat heldag för alla' +
         'vardagar som inte redan registrerats fram t.o.m. dagens datum">Snabbregga</button>';
 
     const ref = document.querySelector('#btn-register-time');
 
+    if($('#btn-register-time').attr('disabled') === 'disabled')
+        newEl.firstElementChild.setAttribute('disabled', 'disabled');
+
     insertBefore(newEl, ref);
     $("#snabbregga").on("click", main);
 };
+
+const addAttributeListener = ($element) => {
+    $element.attrchange({
+        trackValues: true,
+        callback: (event) => {
+            if(event.attributeName === 'disabled') {
+                if(event.newValue === undefined)
+                    $('#snabbregga').removeAttr('disabled');
+                else
+                    $('#snabbregga').attr('disabled', event.newValue);
+            }
+        }
+    });
+}
 
 const rafAsync = () => {
     return new Promise(resolve => {
