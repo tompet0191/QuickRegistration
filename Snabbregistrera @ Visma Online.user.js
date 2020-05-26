@@ -36,7 +36,7 @@ function addButton() {
 
     let newEl = document.createElement('span');
     newEl.innerHTML = '<button id="snabbregga" class="btn btn-primary" title="Registrera att du arbetat heldag för alla' +
-        'vardagar som inte redan registrerats fram t.o.m. dagens datum">Snabbregga</button>';
+        ' vardagar som inte redan registrerats fram t.o.m. dagens datum">Snabbregga</button>';
 
     const ref = document.querySelector('#btn-register-time');
 
