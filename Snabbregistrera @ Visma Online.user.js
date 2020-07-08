@@ -45,7 +45,7 @@ const findMidsummerEve = () => {
     }
 }
 
-const addMidsummerEveTofreeDays = () => {
+const addMidsummerEveToFreeDays = () => {
     const midsummer = findMidsummerEve();
 
     if(!freeDays.includes(midsummer)){
@@ -174,7 +174,7 @@ const main = async () => {
     }
 
     const days = createListOfWeekDays(startDate, getDaysArray);
-    addMidsummerEveTofreeDays();
+    addMidsummerEveToFreeDays();
     const daysToHandle = removeExemptedDays(days);
 
     handleMarking(daysToHandle);
