@@ -18,7 +18,7 @@
 const months = [ "januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober",
     "november", "december" ];
 
-let nonWorkingDays = [ "12-24", "12-31" ]; //Adds friday between 19-25th of june that year to this list.
+let freeDays = [ "12-24", "12-31" ]; //Adds friday between 19-25th of june that year to this list.
 
 waitForKeyElements (
     "#btn-register-time",
@@ -45,11 +45,11 @@ const findMidsummerEve = () => {
     }
 }
 
-const addMidsummerEveToNonWorkingDays = () => {
+const addMidsummerEveTofreeDays = () => {
     const midsummer = findMidsummerEve();
 
-    if(!nonWorkingDays.includes(midsummer)){
-        nonWorkingDays.push(midsummer);
+    if(!freeDays.includes(midsummer)){
+        freeDays.push(midsummer);
     }
 }
 
@@ -148,7 +148,7 @@ const createListOfWeekDays = (startDate, getDaysArray) => {
 }
 
 const removeExemptedDays = (daysToHandle) => daysToHandle
-    .filter(d => !nonWorkingDays.includes(d)) //Removes Christmas Eve, New Year's Eve, Midsummer Eve
+    .filter(d => !freeDays.includes(d)) //Removes Christmas Eve, New Year's Eve, Midsummer Eve
     .filter(d => document.querySelector("[id$='" + d + "']").querySelector(".red-day") === null) //Remove red days
     .filter(d => document.querySelector("[id$='" + d + "']").children[1].children.length === 1); //Remove days that already has time reported
 
@@ -174,7 +174,7 @@ const main = async () => {
     }
 
     const days = createListOfWeekDays(startDate, getDaysArray);
-    addMidsummerEveToNonWorkingDays();
+    addMidsummerEveTofreeDays();
     const daysToHandle = removeExemptedDays(days);
 
     handleMarking(daysToHandle);
